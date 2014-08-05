@@ -10,7 +10,7 @@ public class Consumer{
     private static final String EXCHANGE_NAME_ONE = "logs_one";
   
     public static long diff = 0;
-    private static final int max_mess = 1000;
+    private static final int max_mess = 100000;
     
     public static void main(String[] argv)
     throws java.io.IOException,
@@ -27,6 +27,8 @@ public class Consumer{
         
         boolean doit = true;
         int i = 0;
+        int max_mess = 1;
+        int numofmessages = 1;
         
         while(doit){
             GetResponse response = channel.basicGet(queueName,true);
@@ -42,10 +44,14 @@ public class Consumer{
                 long deliveryTag = response.getEnvelope().getDeliveryTag();
                 
                 i++;
-                if(i >=max_mess){
-                    System.out.println("The max time in seconds for " +i+ " messages is"+diff/1000);
+                if(i >= numofmessages && numofmessages>=max_mess){
+                    System.out.println("The max time in seconds for " +numofmessages+ " messages is"+diff/1000);
+                    doit = false;
+                }
+                else if(i >= numofmessages){
+                    System.out.println("The max time in seconds for " +numofmessages+ " messages is"+diff/1000);
                     i = 0;
-                    
+                    numofmessages*=10;
                 }
             }
         }

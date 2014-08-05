@@ -11,7 +11,7 @@ import java.lang.Thread;
 public class Producer{
     private static final String EXCHANGE_NAME_ONE = "logs_one";
  
-    private final static int max_mess = 1000;
+   // private final static int max_mess = 100000;
     
     public static void main(String[] argv)
     throws java.io.IOException {
@@ -24,34 +24,31 @@ public class Producer{
         channel.exchangeDeclare(EXCHANGE_NAME_ONE, "fanout");
         
         int numofmessages;
-        
+        int max_mess;
         long  start,end;
         
-     //   for(numofmessages = 1;numofmessages<=max_mess;numofmessages*=10){
-        while(true){
-            start = new Date().getTime();
+        for(max_mess = 1;max_mess<=100000;max_mess*=10){
+                start = new Date().getTime();
             
-            for(int i = 1;i<=max_mess;i++){
-                String message = "messages";
+                for(numofmessages = 1;numofmessages<=max_mess;numofmessages++){
+                    String message = "messages";
+                    
+                    channel.basicPublish(EXCHANGE_NAME_ONE, "",
+                                         new AMQP.BasicProperties.Builder()
+                                         .timestamp(new Date())
+                                         .build(),
+                                         message.getBytes());
+                }
                 
-                channel.basicPublish(EXCHANGE_NAME_ONE, "",
-                                     new AMQP.BasicProperties.Builder()
-                                     .timestamp(new Date())
-                                     .build(),
-                                     message.getBytes());
-            }
-            
-            end = new Date().getTime();
-            
-            System.out.println("Time Taken to produce "+max_mess+" messages in millsecs = "+(end-start));
-            try {
-                Thread.sleep(1000-end+start);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-         
+                end = new Date().getTime();
+                
+                System.out.println("Time Taken to produce "+max_mess+" messages in millsecs = "+(end-start));
+                /*try {
+                    Thread.sleep(1000-end+start);
+                }
+                catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }*/
         }
-      //  channel.close();
-      //  connection.close();
     }
 }

@@ -1,16 +1,10 @@
 Test Results for this code are:-
 
-For 1000 bytes/sec				Latency
-
-1 producer - 1 Consumer      			0 s
-2 producers - 1 Consumer			1 s
-2 producers - 2 consumers			1 s
-3 producers - 3 consumers			1 s
-3 producers - 2 consumers			1 s
-3 producers - 1 consumers			1 s
-4 producers - 4 consumers			1 s
-
-
-special case
-
-5 producers - 5 consumers			latency increases with time
+For 5 producers - 5 consumers			
+	bytes/sec				   	  	Latency(in seconds)
+62.5 bytes/sec  [1 message published in 2ms ]			0
+10000 bytes/sec [10 messages published in 1ms]			0
+9259.25 bytes/sec [100 messages published in 8 ms]		0
+9328.35 bytes/sec [1000 messages published in 72 ms]		0
+18698 bytes/sec [10000 messages published in 330 ms]		11.2 
+2809.304 bytes/sec [100000 messages published in 2596 ms]	62.8		
