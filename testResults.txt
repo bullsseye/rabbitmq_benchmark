@@ -1,0 +1,16 @@
+Test Results for this code are:-
+
+For 1000 bytes/sec				Latency
+
+1 producer - 1 Consumer      			0 s
+2 producers - 1 Consumer			1 s
+2 producers - 2 consumers			1 s
+3 producers - 3 consumers			1 s
+3 producers - 2 consumers			1 s
+3 producers - 1 consumers			1 s
+4 producers - 4 consumers			1 s
+
+
+special case
+
+5 producers - 5 consumers			latency increases with time
